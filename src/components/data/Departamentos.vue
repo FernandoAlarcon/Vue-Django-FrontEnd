@@ -228,10 +228,10 @@
               }
               else{
 
-                  var URL_BASE = this.Ruta;
+                  var URL_BASE    = this.Ruta;
                   axios.post(URL_BASE, this.NuevaData).then(() => {
-                        this.getData();
-                        this.NuevaData.DepartmentId   = ''; 
+                        this.getData(this.pagination.current_page);
+                        this.NuevaData.DepartmentId = ''; 
                         this.NuevaData.DepartmentName = ''; 
                              
                         this.errors=[];
@@ -275,7 +275,7 @@
           },
           UpdateData: function(Data){
                 
-               var URL_BASE = this.Ruta;
+               var URL_BASE = this.Ruta + '/' + this.NuevaData.DepartmentId;
                swal({
                title: "Estas seguro de actualizar ?",
                text: "Vas a actualizar la Categoria " + this.NuevaData.DepartmentName + ", cambiaras este registro",
@@ -288,12 +288,12 @@
 
                        axios.put(URL_BASE,this.NuevaData).then(() =>{
                              
-                       this.getData();
+                       this.getData(this.pagination.current_page);
                        this.NuevaData.DepartmentId   = ''; 
                        this.NuevaData.DepartmentName = ''; 
-                       this.showModal                = !this.showModal;
+                       this.showModal                  = !this.showModal;
   
-                       swal("se actualizo el departamento a " + Data.DepartmentName + " de la base de datos", {
+                       swal("Actualizaste la Categoria " + Data.DepartmentName + " de la base de datos", {
                            icon: "success",
                        }); 
 
@@ -301,7 +301,9 @@
                        alert("Error "+error)
                    })
                     
-               } 
+               } else {
+                   swal("No se eliminara!");
+               }
                });  
 
           },
